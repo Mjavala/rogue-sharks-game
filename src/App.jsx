@@ -1,13 +1,22 @@
 import {Unity,  useUnityContext } from 'react-unity-webgl';
 import { Oval } from 'react-loader-spinner';
+import { useEffect } from 'react';
 
 export function App() {
-  const { unityProvider, isLoaded } = useUnityContext ({
+  const { unityProvider, isLoaded, addEventListener, removeEventListener } = useUnityContext ({
     loaderUrl: 'build/SharkRun.loader.js',
     dataUrl: 'build/SharkRun.data.unityweb',
     frameworkUrl: 'build/SharkRun.framework.js.unityweb',
     codeUrl: 'build/SharkRun.wasm.unityweb',
   });
+
+  useEffect(() => {
+    addEventListener("CheckComplete", (e) => {
+      if (e === 'true') {
+        console.log('Game completed');
+      }
+    });
+  }, [addEventListener, removeEventListener]);
 
   
   return (
